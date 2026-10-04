@@ -55,13 +55,11 @@
  *              Hans Verkuil <hverkuil@xs4all.nl>
  *		et al.
  */
-#ifndef _UAPI__LINUX_VIDEODEV2_H
-#define _UAPI__LINUX_VIDEODEV2_H
+#ifndef __LINUX_VIDEODEV2_H
+#define __LINUX_VIDEODEV2_H
 
-#ifndef __KERNEL__
 #include <sys/time.h>
-#endif
-#include <linux/compiler.h>
+
 #include <linux/ioctl.h>
 #include <linux/types.h>
 #include <linux/v4l2-common.h>
@@ -318,14 +316,12 @@ enum v4l2_ycbcr_encoding {
 	/* Rec. 709/EN 61966-2-4 Extended Gamut -- HDTV */
 	V4L2_YCBCR_ENC_XV709          = 4,
 
-#ifndef __KERNEL__
 	/*
 	 * sYCC (Y'CbCr encoding of sRGB), identical to ENC_601. It was added
 	 * originally due to a misunderstanding of the sYCC standard. It should
 	 * not be used, instead use V4L2_YCBCR_ENC_601.
 	 */
 	V4L2_YCBCR_ENC_SYCC           = 5,
-#endif
 
 	/* BT.2020 Non-constant Luminance Y'CbCr */
 	V4L2_YCBCR_ENC_BT2020         = 6,
@@ -1147,16 +1143,16 @@ struct v4l2_framebuffer {
 
 struct v4l2_clip {
 	struct v4l2_rect        c;
-	struct v4l2_clip	__user *next;
+	struct v4l2_clip	*next;
 };
 
 struct v4l2_window {
 	struct v4l2_rect        w;
 	__u32			field;	 /* enum v4l2_field */
 	__u32			chromakey;
-	struct v4l2_clip	__user *clips;
+	struct v4l2_clip	*clips;
 	__u32			clipcount;
-	void			__user *bitmap;
+	void			*bitmap;
 	__u8                    global_alpha;
 };
 
@@ -1685,19 +1681,17 @@ struct v4l2_ext_control {
 	union {
 		__s32 value;
 		__s64 value64;
-		char __user *string;
-		__u8 __user *p_u8;
-		__u16 __user *p_u16;
-		__u32 __user *p_u32;
-		void __user *ptr;
+		char *string;
+		__u8 *p_u8;
+		__u16 *p_u16;
+		__u32 *p_u32;
+		void *ptr;
 	};
 } __attribute__ ((packed));
 
 struct v4l2_ext_controls {
 	union {
-#ifndef __KERNEL__
 		__u32 ctrl_class;
-#endif
 		__u32 which;
 	};
 	__u32 count;
@@ -1707,9 +1701,7 @@ struct v4l2_ext_controls {
 };
 
 #define V4L2_CTRL_ID_MASK      	  (0x0fffffff)
-#ifndef __KERNEL__
 #define V4L2_CTRL_ID2CLASS(id)    ((id) & 0x0fff0000UL)
-#endif
 #define V4L2_CTRL_ID2WHICH(id)    ((id) & 0x0fff0000UL)
 #define V4L2_CTRL_DRIVER_PRIV(id) (((id) & 0xffff) >= 0x1000)
 #define V4L2_CTRL_MAX_DIMS	  (4)
@@ -2559,4 +2551,4 @@ struct v4l2_create_buffers {
 /* (BASE_VIDIOC_PRIVATE + 0) is private ioctl code for video module */
 #define BASE_VIDIOC_PRIVATE_VIDEO	(BASE_VIDIOC_PRIVATE + 0)
 
-#endif /* _UAPI__LINUX_VIDEODEV2_H */
+#endif /* __LINUX_VIDEODEV2_H */

@@ -1,5 +1,5 @@
-#ifndef _UAPI_LINUX_MSM_ION_H
-#define _UAPI_LINUX_MSM_ION_H
+#ifndef _LINUX_MSM_ION_H
+#define _LINUX_MSM_ION_H
 
 #include <linux/types.h>
 
@@ -120,4 +120,4 @@ struct ion_prefetch_data {
 #define ION_IOC_DRAIN			_IOWR(ION_IOC_MSM_MAGIC, 4, \
 						struct ion_prefetch_data)
 
-#endif /* _UAPI_LINUX_MSM_ION_H */
+#endif /* _LINUX_MSM_ION_H */
