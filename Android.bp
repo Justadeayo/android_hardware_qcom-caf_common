@@ -3,6 +3,11 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+filegroup {
+    name: "qcom_caf_common_compatibility_matrix",
+    srcs: ["compatibility_matrix.xml"],
+}
+
 cc_library_headers {
     name: "audio_kernel_headers",
     defaults: ["generated_kernel_header_defaults"],
